@@ -1,0 +1,23 @@
+{
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "atoms": "./src/components/atoms",
+          "components": "./src/components",
+          "context": "./src/context",
+          "data": "./src/data",
+          "hooks": "./src/hooks",
+          "molecules": "./src/components/molecules",
+          "organisms": "./src/components/organisms",
+          "pages": "./src/pages",
+          "styles": "./src/styles",
+          "templates": "./src/components/templates",
+          "utils": "./src/utils"
+        }
+      }
+    ]
+  ]
+}
