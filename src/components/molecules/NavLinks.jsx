@@ -28,14 +28,7 @@ const NavLink = styled.a`
   }
 `;
 
-const NavLinks = ({
-  links,
-  gap,
-  color,
-  hoverColor,
-  fontSize,
-  onClickHandler,
-}) => {
+const NavLinks = ({ links, gap, color, hoverColor, onClickHandler }) => {
   return (
     <NavList gap={gap}>
       {links.map((link, index) => (
