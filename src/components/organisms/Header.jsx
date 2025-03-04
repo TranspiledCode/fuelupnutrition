@@ -1,5 +1,4 @@
-// src/components/organisms/Header.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Menu, X, Gauge } from 'lucide-react';
 import theme from 'styles/theme';
@@ -43,7 +42,6 @@ const MenuButton = styled.button`
   }
 `;
 
-// Mobile Menu
 const MobileMenuOverlay = styled.div`
   position: fixed;
   inset: 0;
@@ -53,8 +51,11 @@ const MobileMenuOverlay = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: opacity ${theme.transitions.default};
+  transition:
+    opacity ${theme.transitions.default},
+    visibility ${theme.transitions.default};
   opacity: ${(props) => (props.isOpen ? '1' : '0')};
+  visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
   pointer-events: ${(props) => (props.isOpen ? 'auto' : 'none')};
 `;
 
@@ -72,7 +73,7 @@ const MobileLogo = styled.div`
   display: flex;
   align-items: center;
   gap: ${theme.spacing[2]};
-  margin-bottom: ${theme.spacing[10]};
+  margin-bottom: ${theme.spacing[6]};
 `;
 
 const MobileLogoTextOne = styled.span`
@@ -84,6 +85,7 @@ const MobileLogoTextOne = styled.span`
 const MobileNav = styled.nav`
   width: 100%;
   padding: 0 ${theme.spacing[12]};
+  text-align: center;
 `;
 
 const MobileSocialIcons = styled.div`
@@ -94,8 +96,22 @@ const MobileSocialIcons = styled.div`
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [mobileMenuOpen]);
+
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+    setMobileMenuOpen((prev) => !prev);
+  };
+
+  const closeMobileMenu = (e) => {
+    if (e.target.id === 'mobile-menu-overlay') {
+      setMobileMenuOpen(false);
+    }
   };
 
   const navLinks = [
@@ -111,20 +127,21 @@ const Header = () => {
         <HeaderContainer>
           <Logo />
 
-          {/* Desktop Navigation */}
           <DesktopNav>
             <NavLinks links={navLinks} />
           </DesktopNav>
 
-          {/* Mobile Menu Button */}
           <MenuButton onClick={toggleMobileMenu} aria-label="Toggle menu">
             <Menu size={28} />
           </MenuButton>
         </HeaderContainer>
       </HeaderWrapper>
 
-      {/* Mobile Navigation Overlay */}
-      <MobileMenuOverlay isOpen={mobileMenuOpen}>
+      <MobileMenuOverlay
+        id="mobile-menu-overlay"
+        isOpen={mobileMenuOpen}
+        onClick={closeMobileMenu}
+      >
         <CloseButton onClick={toggleMobileMenu} aria-label="Close menu">
           <X size={32} />
         </CloseButton>
