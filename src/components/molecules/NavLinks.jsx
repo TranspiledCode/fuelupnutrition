@@ -21,10 +21,14 @@ const NavLink = styled.a`
   color: ${(props) => props.color || theme.colors.white};
   text-decoration: none;
   transition: color ${theme.transitions.default};
-  font-size: ${(props) => props.fontSize || '3rem'};
+  font-size: ${(props) => props.fontSize || '2rem'};
 
   &:hover {
     color: ${(props) => props.hoverColor || theme.colors.purple.main};
+  }
+
+  @media (max-width: ${theme.breakpoints.md}) {
+    font-size: 3rem;
   }
 `;
 

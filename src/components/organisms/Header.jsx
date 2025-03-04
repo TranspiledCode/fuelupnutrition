@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Menu, X, Gauge } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import theme from 'styles/theme';
 import Container from 'atoms/Container';
 import Logo from 'atoms/Logo';
@@ -76,12 +76,6 @@ const MobileLogo = styled.div`
   margin-bottom: ${theme.spacing[6]};
 `;
 
-const MobileLogoTextOne = styled.span`
-  font-size: 1.875rem;
-  font-weight: bold;
-  color: ${theme.colors.secondary};
-`;
-
 const MobileNav = styled.nav`
   width: 100%;
   padding: 0 ${theme.spacing[12]};
@@ -98,14 +92,6 @@ const MobileSocialIcons = styled.div`
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-  }, [mobileMenuOpen]);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen((prev) => !prev);
@@ -150,8 +136,7 @@ const Header = () => {
         </CloseButton>
 
         <MobileLogo>
-          <Gauge color={theme.colors.secondary} size={40} />
-          <MobileLogoTextOne>Fuel Up Nutrition</MobileLogoTextOne>
+          <Logo color={theme.colors.secondary} />
         </MobileLogo>
 
         <MobileNav>

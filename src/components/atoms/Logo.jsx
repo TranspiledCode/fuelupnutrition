@@ -14,14 +14,14 @@ const LogoWrapper = styled.div`
 const LogoTextOne = styled.span`
   font-size: 3rem;
   font-weight: bold;
-  color: ${theme.colors.white};
+  color: ${(props) => props.color || theme.colors.white};
   font-family: 'Poiret One', serif;
   word-spacing: -0.6rem;
 `;
 
 const LogoTextTwo = styled.span`
   font-size: 3rem;
-  color: ${theme.colors.white};
+  color: ${(props) => props.color || theme.colors.white};
   font-family: 'Charmonman', cursive;
   padding-top: 0.8rem;
   font-weight: bold;
@@ -35,8 +35,8 @@ const Logo = ({ size = 35, color = theme.colors.white }) => {
   return (
     <LogoWrapper>
       <Gauge color={color} size={size} />
-      <LogoTextOne>Fuel Up</LogoTextOne>
-      <LogoTextTwo>Nutrition</LogoTextTwo>
+      <LogoTextOne color={color}>Fuel Up</LogoTextOne>
+      <LogoTextTwo color={color}>Nutrition</LogoTextTwo>
     </LogoWrapper>
   );
 };

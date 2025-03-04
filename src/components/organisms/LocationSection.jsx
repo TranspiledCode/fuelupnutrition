@@ -1,24 +1,10 @@
 // src/components/organisms/LocationSection.js
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import { keyframes } from '@emotion/react';
 import Container from 'atoms/Container';
 import SectionTitle from 'atoms/SectionTitle';
 import LocationCard from 'molecules/LocationCard';
-import { MapPin as MapPinIcon } from 'lucide-react';
-
-// Animations
-const pulse = keyframes`
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-`;
-
-const float = keyframes`
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
-`;
+import useIntersectionObserver from 'hooks/useIntersectionObserver';
 
 // Styled Components
 const LocationSectionWrapper = styled.section`
@@ -62,7 +48,6 @@ const CircleDecoration = styled.div`
   border-radius: 50%;
   border: 2px dashed rgba(37, 99, 235, 0.2);
   z-index: 0;
-  animation: ${float} 6s ease-in-out infinite;
 `;
 
 const LocationGrid = styled.div`
@@ -85,25 +70,6 @@ const MapContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  opacity: 0;
-  transform: translateY(20px);
-  transform-origin: center;
-  transition:
-    opacity 0.8s ease-out,
-    transform 0.8s ease-out,
-    box-shadow 0.3s ease;
-
-  ${(props) =>
-    props.isVisible &&
-    `
-    opacity: 1;
-    transform: translateY(0);
-  `}
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  }
 
   @media (max-width: 768px) {
     min-height: 300px;
@@ -128,7 +94,6 @@ const LocationPin = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-  animation: ${pulse} 2s infinite ease-in-out;
 `;
 
 const PinRing = styled.div`
@@ -173,32 +138,7 @@ const SectionTitleContainer = styled.div`
 `;
 
 const LocationSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    // Check if IntersectionObserver is available in the browser
-    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.2 },
-      );
-
-      if (sectionRef.current) {
-        observer.observe(sectionRef.current);
-      }
-
-      return () => observer.disconnect();
-    } else {
-      // Fallback for browsers that don't support IntersectionObserver
-      setIsVisible(true);
-    }
-  }, []);
+  const [sectionRef] = useIntersectionObserver({ threshold: 0.2 });
 
   return (
     <LocationSectionWrapper id="location" ref={sectionRef}>
@@ -207,21 +147,11 @@ const LocationSection = () => {
 
       <Container>
         <SectionTitleContainer>
-          <SectionTitle
-            color="#2563eb"
-            style={{
-              opacity: isVisible ? 1 : 0,
-              transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'opacity 0.6s ease, transform 0.6s ease',
-            }}
-          >
-            Find Us
-          </SectionTitle>
+          <SectionTitle color="#2563eb">Find Us</SectionTitle>
         </SectionTitleContainer>
 
         <LocationGrid>
           <LocationCard
-            animated={isVisible}
             address="3417 N Cole Rd, Boise, ID 83704"
             hours={{
               Monday: '7 AM–5 PM',
@@ -235,7 +165,7 @@ const LocationSection = () => {
             phone="(208) 954-7434"
           />
 
-          <MapContainer isVisible={isVisible}>
+          <MapContainer>
             <MapOverlay />
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2884.5673666491387!2d-116.28292642358635!3d43.687195571124325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54ae552add8a1a43%3A0x736e458bc51e7aee!2s3417%20N%20Cole%20Rd%2C%20Boise%2C%20ID%2083704!5e0!3m2!1sen!2sus!4v1709584184499!5m2!1sen!2sus"
@@ -248,9 +178,6 @@ const LocationSection = () => {
               title="Google Maps location"
             />
             <LocationPin>
-              <div style={{ transform: 'translateY(-50%)' }}>
-                <MapPinIcon size={48} color="#2563eb" />
-              </div>
               <PinRing />
             </LocationPin>
           </MapContainer>

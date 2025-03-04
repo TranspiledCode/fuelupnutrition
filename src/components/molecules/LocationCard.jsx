@@ -7,14 +7,6 @@ const CardContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 2rem;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  }
 
   @media (max-width: 640px) {
     padding: 1.5rem;
@@ -44,13 +36,6 @@ const CardTitle = styled.h3`
 
 const InfoGroup = styled.div`
   margin-bottom: 1.5rem;
-  opacity: ${(props) => (props.animated ? 1 : 0)};
-  transform: ${(props) =>
-    props.animated ? 'translateX(0)' : 'translateX(-20px)'};
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
-  transition-delay: ${(props) => props.delay || '0s'};
 `;
 
 const InfoItem = styled.div`
@@ -97,7 +82,7 @@ const InfoLabel = styled.h4`
 `;
 
 const InfoText = styled.p`
-  font-size: 1rem;
+  font-size: 1.8rem;
   color: #4b5563;
   line-height: 1.6;
 
@@ -145,13 +130,10 @@ const ContactButton = styled.a`
   text-decoration: none;
   font-size: 1.125rem;
   margin-top: 1rem;
-  transition:
-    background-color 0.3s ease,
-    transform 0.2s ease;
+  transition: background-color 0.3s ease;
 
   &:hover {
     background-color: #1d4ed8;
-    transform: translateY(-2px);
   }
 
   svg {
@@ -165,20 +147,7 @@ const ContactButton = styled.a`
   }
 `;
 
-const LocationCard = ({
-  animated = false,
-  address = '3417 N Cole Rd, Boise, ID 83704',
-  hours = {
-    Monday: '7 AM–5 PM',
-    Tuesday: '7 AM–5 PM',
-    Wednesday: '7 AM–5 PM',
-    Thursday: '7 AM–5 PM',
-    Friday: '7 AM–5 PM',
-    Saturday: '9 AM–2 PM',
-    Sunday: '9 AM–2 PM',
-  },
-  phone = '(208) 954-7434',
-}) => {
+const LocationCard = ({ address = '', hours = {}, phone = '' }) => {
   const daysOfWeek = [
     'Monday',
     'Tuesday',
@@ -193,7 +162,7 @@ const LocationCard = ({
     <CardContainer>
       <CardTitle>Contact Information</CardTitle>
 
-      <InfoGroup animated={animated} delay="0.1s">
+      <InfoGroup>
         <InfoItem>
           <IconWrapper>
             <MapPin size={22} />
@@ -205,7 +174,7 @@ const LocationCard = ({
         </InfoItem>
       </InfoGroup>
 
-      <InfoGroup animated={animated} delay="0.3s">
+      <InfoGroup>
         <InfoItem>
           <IconWrapper>
             <Clock size={22} />
@@ -224,7 +193,7 @@ const LocationCard = ({
         </InfoItem>
       </InfoGroup>
 
-      <InfoGroup animated={animated} delay="0.5s">
+      <InfoGroup>
         <InfoItem>
           <IconWrapper>
             <Phone size={22} />
@@ -236,11 +205,7 @@ const LocationCard = ({
         </InfoItem>
       </InfoGroup>
 
-      <InfoGroup
-        animated={animated}
-        delay="0.7s"
-        style={{ textAlign: 'center' }}
-      >
+      <InfoGroup style={{ textAlign: 'center' }}>
         <ContactButton href={`tel:${phone.replace(/[^0-9]/g, '')}`}>
           <Phone size={18} />
           Call Now
