@@ -86,6 +86,9 @@ const MobileNav = styled.nav`
   width: 100%;
   padding: 0 ${theme.spacing[12]};
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: ${theme.spacing[4]};
 `;
 
 const MobileSocialIcons = styled.div`
@@ -148,7 +151,7 @@ const Header = () => {
 
         <MobileLogo>
           <Gauge color={theme.colors.secondary} size={40} />
-          <MobileLogoTextOne>Nectar</MobileLogoTextOne>
+          <MobileLogoTextOne>Fuel Up Nutrition</MobileLogoTextOne>
         </MobileLogo>
 
         <MobileNav>

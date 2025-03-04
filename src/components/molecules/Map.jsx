@@ -46,7 +46,7 @@ const MapPinText = styled.span`
   font-size: 0.875rem;
 `;
 
-const MapComponent = ({ locationName = 'Nectar Juice Bar' }) => {
+const MapComponent = ({ locationName = 'Fuel Up Nutrition' }) => {
   return (
     <MapContainer>
       <MapImage
